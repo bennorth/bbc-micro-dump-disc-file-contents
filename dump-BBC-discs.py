@@ -91,7 +91,7 @@ class BBCController:
         assert response[-1] == ord('>')
         return response.decode()
 
-    def disk_listing(self):
+    def disc_listing(self):
         raw_info = self.do_raw('*INFO *.*')
         raw_lines = raw_info.split('\n\r')
         assert raw_lines[0] == '*INFO *.*'
@@ -113,9 +113,9 @@ class BBCController:
         print(f'dumped {file_info.name}')
         return DiskFile.from_info_and_fragments(file_info, fragments)
 
-    def dump_whole_disk(self, fname, drive=0, skip_files=[]):
+    def dump_whole_disc(self, fname, drive=0, skip_files=[]):
         ignored = self.do_raw(f'*DRIVE {drive}')
-        file_infos = self.disk_listing()
+        file_infos = self.disc_listing()
         for i in file_infos:
             print(f'{i.name}  {i.size}')
         all_dumps = [self.file_dump(info) for info in file_infos
@@ -128,6 +128,6 @@ class BBCController:
 Example usage:
 
 bbc = BBCController()
-bbc.dump_whole_disk('disk-16-0.json', 0)
-bbc.dump_whole_disk('disk-16-2.json', 2, ['BADFILE1', 'BADFILE2'])
+bbc.dump_whole_disc('disc-16-0.json', 0)
+bbc.dump_whole_disc('disc-16-2.json', 2, ['BADFILE1', 'BADFILE2'])
 """
